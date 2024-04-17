@@ -3,6 +3,8 @@ package shop.mtcoding.product_spring.order;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import shop.mtcoding.product_spring.product.Product;
 import shop.mtcoding.product_spring.user.User;
 
@@ -19,9 +21,9 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    // 상품 여러개를 주문할 수 있다.
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Product product;
+    // 여러번 상품을 주문할 수 있다.
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Product product;
 
     private Integer status; // 1:구매, 2:취소
 
