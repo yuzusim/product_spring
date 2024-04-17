@@ -19,6 +19,11 @@ public class ProductRepository {
         return query.getResultList();
     }
 
+    public Product findById(int id){
+        Product product = em.find(Product.class, id);
+        return product;
+    }
+
     @Transactional
     public Product save(Product product) {    // 순수했던 애가 (우유가)
         em.persist(product);   // 어딘가에 잠깐 담겼죠? (초코우유가 됨)

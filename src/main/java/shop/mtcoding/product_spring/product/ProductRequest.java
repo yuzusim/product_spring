@@ -1,20 +1,21 @@
 package shop.mtcoding.product_spring.product;
 
 import lombok.Data;
+import shop.mtcoding.product_spring.user.User;
 
 public class ProductRequest {
     @Data
-    public static class saveDTO{
+    public static class SaveDTO{
         private String name;
         private Integer price;
         private Integer qty;
 
-        public Product toEntity(Product product) {
+        public Product toEntity(User user) {
             return Product.builder()
                     .name(name)
                     .price(price)
                     .qty(qty)
-                    .id(product.getId())
+                    //.user(user)
                     .build();
 
         }

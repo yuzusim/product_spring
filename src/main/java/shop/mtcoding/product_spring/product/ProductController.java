@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import shop.mtcoding.product_spring.user.User;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class ProductController {
     private final ProductRepository productRepository;
     private final HttpSession session;
 
+    // 상품목록보기
     @GetMapping({"/product", "/"})
     public String list(HttpServletRequest request) {
         List<Product> productList = productRepository.findAll();
@@ -25,7 +27,7 @@ public class ProductController {
         return "product/list";
     }
 
-    //
+    // 상품 상세보기
     @GetMapping("/product/{id}")
     public String detail(@PathVariable int id) {
 
@@ -33,23 +35,31 @@ public class ProductController {
         return "product/detail";
     }
 
+    // 상품 등록하기
     @GetMapping("/product/saveForm")
     public String saveForm() {
         return "product/saveForm";
     }
 
+    @PostMapping("product/add")
+    public String save(ProductRequest.SaveDTO reqDTO) {
+//        System.out.println("name : "+name);
+//        System.out.println("number : "+number);
+//        System.out.println("qty : "+qty);
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        productRepository.save(reqDTO.toEntity(sessionUser));
+
+        // 페이지 리턴
+        return "redirect:/";
+    }
+
+    // 상품 수정하기
     @GetMapping("/product/{id}/updateForm")
     public String updateForm(@PathVariable int id) {
 
         // 페이지 리턴
         return "product/updateForm";
-    }
-
-    @PostMapping("product/add")
-    public String save() {
-
-        // 페이지 리턴
-        return "redirect:/product/" + 1;
     }
 
     @PostMapping("/product/{id}/edit")
@@ -59,6 +69,7 @@ public class ProductController {
         return "redirect:/product/" + 1;
     }
 
+    // 상품 삭제하기
     @PostMapping("/product/{id}/delete")
     public String delete(@PathVariable int id) {
 

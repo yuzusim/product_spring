@@ -19,6 +19,18 @@ public class ProductRepositoryTest {
     private EntityManager em;
 
     @Test
+    public void findById_test() {
+        // given
+        int id = 1;
+
+        // when
+        productRepository.findById(id);
+
+        // then
+
+    }
+
+    @Test
     public void findAll_test() {
         // given
 
@@ -26,7 +38,7 @@ public class ProductRepositoryTest {
         List<Product> productList = productRepository.findAll();
 
         // then
-        System.out.println("findAll_test : "+productList.size());
+        System.out.println("findAll_test : " + productList.size());
 
         //Assertions.assertThat(productList.size()).isEqualTo(2);
 

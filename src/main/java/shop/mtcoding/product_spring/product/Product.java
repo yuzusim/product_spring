@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import shop.mtcoding.product_spring.user.User;
 
 import java.sql.Timestamp;
 
@@ -26,6 +27,12 @@ public class Product {
 
     @Column(nullable = false)
     private Integer qty;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+//    private String imgTitle; // 이미지 이름
+//    private String imgFilename; // 파일 패스
 
     @CreationTimestamp // pc -> db (날짜주입)
     private Timestamp createdAt;
