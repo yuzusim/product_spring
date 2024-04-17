@@ -13,21 +13,33 @@ import java.util.List;
 public class ProductRepository {
     private final EntityManager em;
 
-    public List<Product> findAll(){
+    //게시글 목록보기 완료
+    public List<Product> findAll() {
         Query query =
                 em.createQuery("select p from Product p order by p.id desc", Product.class);
         return query.getResultList();
     }
 
-    public Product findById(int id){
+    public Product findById(int id) {
         Product product = em.find(Product.class, id);
         return product;
     }
 
+    //게시글 쓰기 완료
     @Transactional
-    public Product save(Product product) {    // 순수했던 애가 (우유가)
-        em.persist(product);   // 어딘가에 잠깐 담겼죠? (초코우유가 됨)
-        return product;   // return도 안해도 됨
+    public Product save(Product product) {
+        em.persist(product);
+        return product;
     }
 
+    @Transactional
+    public void updeteById(int id, String name, Integer price, Integer qty) {
+        Product product = findById(id);
+        product.setName(name);
+        product.setPrice(price);
+        product.setQty(qty);
+    }
+
+    public void deleteById(int id) {
+    }
 }

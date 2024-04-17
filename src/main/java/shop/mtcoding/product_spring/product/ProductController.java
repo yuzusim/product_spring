@@ -29,7 +29,9 @@ public class ProductController {
 
     // 상품 상세보기
     @GetMapping("/product/{id}")
-    public String detail(@PathVariable int id) {
+    public String detail(@PathVariable int id, HttpServletRequest request) {
+        Product product = productRepository.findById(id);
+        request.setAttribute("product", product);
 
         // 페이지 리턴
         return "product/detail";
@@ -56,23 +58,25 @@ public class ProductController {
 
     // 상품 수정하기
     @GetMapping("/product/{id}/updateForm")
-    public String updateForm(@PathVariable int id) {
+    public String updateForm(@PathVariable int id, HttpServletRequest request) {
+        Product product = productRepository.findById(id);
+        request.setAttribute("product", product);
 
         // 페이지 리턴
         return "product/updateForm";
     }
 
-    @PostMapping("/product/{id}/edit")
-    public String update(@PathVariable int id) {
-
+    @PostMapping("/product/{id}/update")
+    public String update(@PathVariable int id, ProductRequest.UpdateDTO reqDTO) {
+        productRepository.updeteById(id, reqDTO.getName(), reqDTO.getPrice(), reqDTO.getQty());
         // 페이지 리턴
-        return "redirect:/product/" + 1;
+        return "redirect:/product/" + id;
     }
 
     // 상품 삭제하기
     @PostMapping("/product/{id}/delete")
     public String delete(@PathVariable int id) {
-
+        productRepository.deleteById(id);
         // 페이지 리턴
         return "redirect:/";
     }

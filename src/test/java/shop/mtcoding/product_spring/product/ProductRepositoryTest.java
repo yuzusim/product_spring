@@ -19,6 +19,22 @@ public class ProductRepositoryTest {
     private EntityManager em;
 
     @Test
+    public void updateById_test() {
+       // given
+        int id = 1;
+        String name = "name1";
+        Integer price = 1;
+        Integer qty = 1;
+
+       // when
+        productRepository.updeteById(id, name, price, qty);
+        em.flush();
+
+        // then
+
+    }
+
+    @Test
     public void findById_test() {
         // given
         int id = 1;
