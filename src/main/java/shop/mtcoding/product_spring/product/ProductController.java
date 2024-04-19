@@ -7,15 +7,44 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 import shop.mtcoding.product_spring.user.User;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Controller
 public class ProductController {
     private final ProductRepository productRepository;
     private final HttpSession session;
+
+    @PostMapping("/upload")
+    public String upload(ProductRequest.UploadDTO reqDTO){
+        // 1. 데이터 전달 받고
+        String title = reqDTO.getTitle();
+        MultipartFile imgFile = reqDTO.getImgFile();
+
+        // 2. 파일저장 위치 설정해서 파일을 저장 (UUID 붙여서 롤링)
+        String imgFilename = UUID.randomUUID()+"_"+imgFile.getOriginalFilename();
+        Path imgPath = Paths.get("./upload/"+imgFilename);
+        try {
+            Files.write(imgPath, imgFile.getBytes());
+
+            // 3. DB에 저장 (title, realFileName)
+            //picRepository.insert(title, imgFilename);
+            productRepository.insert(title, imgFilename);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "redirect:/";
+    }
 
     // 상품목록보기
     @GetMapping({"/product", "/"})

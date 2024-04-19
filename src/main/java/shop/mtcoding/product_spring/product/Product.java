@@ -31,18 +31,31 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-//    private String imgTitle; // 이미지 이름
-//    private String imgFilename; // 파일 패스
+    @Column(nullable = false)
+    private String imgTitle; // 이미지 이름
+    private String imgFilename; // 파일 패스
 
     @CreationTimestamp // pc -> db (날짜주입)
     private Timestamp createdAt;
 
     @Builder
-    public Product(Integer id, String name, Integer price, Integer qty, Timestamp createdAt) {
+    public Product(Integer id, String name, Integer price, Integer qty, User user, String imgTitle, String imgFilename, Timestamp createdAt) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.qty = qty;
+        this.user = user;
+        this.imgTitle = imgTitle;
+        this.imgFilename = imgFilename;
         this.createdAt = createdAt;
     }
+
+    //    @Builder
+//    public Product(Integer id, String name, Integer price, Integer qty, Timestamp createdAt) {
+//        this.id = id;
+//        this.name = name;
+//        this.price = price;
+//        this.qty = qty;
+//        this.createdAt = createdAt;
+//    }
 }

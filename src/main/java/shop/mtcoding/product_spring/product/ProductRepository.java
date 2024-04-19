@@ -13,6 +13,8 @@ import java.util.List;
 public class ProductRepository {
     private final EntityManager em;
 
+
+
     //게시글 목록보기 완료
     public List<Product> findAll() {
         Query query =
@@ -47,4 +49,33 @@ public class ProductRepository {
         query.setParameter("id", id);
         query.executeUpdate();
     }
+
+
+    @Transactional
+    public void insert(String title, String imgFilename) {
+        Query query =
+                em.createQuery("");
+
+        //em.createQuery("select p from Product p order by p.id desc", Product.class);
+
+
+    }
+
+//    @Transactional
+//    public void insert(String title, String imgFilename){
+//        Query query = em.createNativeQuery("insert into pic_tb(title, img_filename) values(?,?)");
+//        query.setParameter(1, title);
+//        query.setParameter(2, imgFilename);
+//
+//        query.executeUpdate();
+//    }
+//
+//    public Pic findById(int id){
+//        Query query = em.createNativeQuery("select * from pic_tb where id = ?", Pic.class);
+//        query.setParameter(1, id);
+//
+//        return (Pic) query.getSingleResult();
+//    }
+
+
 }
